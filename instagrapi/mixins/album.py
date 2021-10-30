@@ -84,7 +84,7 @@ class DownloadAlbumMixin:
 class UploadAlbumMixin:
     def album_upload(
         self,
-        paths: List[Path],
+        paths,
         caption: str,
         usertags: List[Usertag] = [],
         location: Location = None,
@@ -125,8 +125,7 @@ class UploadAlbumMixin:
         """
         children = []
         for path in paths:
-            path = Path(path)
-            if path.suffix.lower() in (".jpg", ".jpeg"):
+            if path.name.split('.')[-1] in ("jpg", "jpeg"):
                 upload_id, width, height = self.photo_rupload(path, to_album=True)
                 children.append(
                     {
@@ -145,7 +144,7 @@ class UploadAlbumMixin:
                         "scene_type": None,
                     }
                 )
-            elif path.suffix.lower() == ".mp4":
+            elif path.name.split('.')[-1] == "mp4":
                 upload_id, width, height, duration, thumbnail = self.video_rupload(
                     path, to_album=True
                 )
