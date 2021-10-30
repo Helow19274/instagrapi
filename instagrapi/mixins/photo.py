@@ -103,7 +103,7 @@ class UploadPhotoMixin:
     """
 
     def photo_rupload(
-        self, path: Path, upload_id: str = "", to_album: bool = False
+        self, path, upload_id: str = "", to_album: bool = False
     ) -> tuple:
         """
         Upload photo to Instagram
@@ -141,9 +141,8 @@ class UploadPhotoMixin:
         }
         if to_album:
             rupload_params["is_sidecar"] = "1"
-        with open(path, "rb") as fp:
-            photo_data = fp.read()
-            photo_len = str(len(photo_data))
+        photo_data = path.read()
+        photo_len = str(len(photo_data))
         headers = {
             "Accept-Encoding": "gzip",
             "X-Instagram-Rupload-Params": json.dumps(rupload_params),
@@ -175,7 +174,7 @@ class UploadPhotoMixin:
 
     def photo_upload(
         self,
-        path: Path,
+        path,
         caption: str,
         upload_id: str = "",
         usertags: List[Usertag] = [],
@@ -205,7 +204,6 @@ class UploadPhotoMixin:
         Media
             An object of Media class
         """
-        path = Path(path)
         upload_id, width, height = self.photo_rupload(path, upload_id)
         for attempt in range(10):
             self.logger.debug(f"Attempt #{attempt} to configure Photo: {path}")
