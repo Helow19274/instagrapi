@@ -110,8 +110,6 @@ class UploadPhotoMixin:
 
         Parameters
         ----------
-        path: Path
-            Path to the media
         upload_id: str, optional
             Unique upload_id (String). When None, then generate automatically. Example from video.video_configure
         to_album: bool, optional
@@ -121,7 +119,6 @@ class UploadPhotoMixin:
         tuple
             (Upload ID for the media, width, height)
         """
-        assert isinstance(path, Path), f"Path must been Path, now {path} ({type(path)})"
         upload_id = upload_id or str(int(time.time() * 1000))
         assert path, "Not specified path to photo"
         waterfall_id = str(uuid4())
@@ -186,8 +183,6 @@ class UploadPhotoMixin:
 
         Parameters
         ----------
-        path: Path
-            Path to the media
         caption: str
             Media caption
         upload_id: str, optional
